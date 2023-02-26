@@ -1,15 +1,10 @@
-import uuid
+from Lobby import Lobby
 
-class Lobby():
-    def __init__(self, num_players: int, players: list=[], lobby_uuid=uuid.uuid4()):
-        self.num_players: int = num_players
-        self.players: list = players
-        self.lobby_uuid = lobby_uuid
 
-class LobbyManager():
+class LobbyManager:
     def __init__(self):
         self.lobbies: dict = {}
-    
+
     def create_lobby(self, game, num_players):
         if game not in self.lobbies:
             self.lobbies[game] = []
@@ -21,13 +16,13 @@ class LobbyManager():
     def get_lobby_index(self, game, lobby_uuid=None):
         if game not in self.lobbies:
             return -1
-        
+
         if lobby_uuid:
             return next((i for i, lobby in enumerate(self.lobbies) if lobby.lobby_uuid is lobby_uuid), -1)
-        
-        return 0        
-    
-    def add_player(self, game, player, lobby_uuid = None):
+
+        return 0
+
+    def add_player(self, game, player, lobby_uuid=None):
         if game not in self.lobbies:
             raise RuntimeError("No lobby created for this game.")
 
@@ -44,7 +39,3 @@ class LobbyManager():
 
         response = f"Added <{player}> to {game} lobby. {lobby_num_players} spots remaining."
         return response
-
-
-
-
